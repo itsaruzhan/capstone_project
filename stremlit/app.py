@@ -11,7 +11,7 @@ if 'data' not in st.session_state:
 st.write("""
     # BBC NEWS Classification 
     """)
-filename = "nlp-model.joblib"
+filename = "streamlit/nlp-model.joblib"
 
 model = joblib.load(filename)
 
