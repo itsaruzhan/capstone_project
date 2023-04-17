@@ -36,29 +36,22 @@ def main():
     
     while True:    
         num = st.session_state.num
+     
+        with placeholder.form(key=str(num)):
 
-        if placeholder2.button('End', key=num):
-            selected == "News"
-            placeholder2.empty()
-            df = pd.DataFrame(st.session_state.data)
-            st.dataframe(df)
-            break
-        else:        
-            with placeholder.form(key=str(num)):
+            new_comment = News(page_id=num)        
 
-                new_comment = News(page_id=num)        
-
-                if st.form_submit_button('Submit'):                
-                    st.session_state.data.append({
+            if st.form_submit_button('Submit'):                
+                st.session_state.data.append({
                         'id': num, 'new': new_comment.text, 'category': new_comment.category})
-                    st.session_state.num += 1
-                    with st.spinner('Wait for it...'):
-                        time.sleep(3)
-                        st.success("Done! News' category is " +  new_comment.category)
-                    placeholder.empty()
-                    placeholder2.empty()
-                else:
-                    st.stop()
+                st.session_state.num += 1
+                with st.spinner('Wait for it...'):
+                    time.sleep(3)
+                    st.success("Done! News' category is " +  new_comment.category)
+                placeholder.empty()
+                placeholder2.empty()
+            else:
+                st.stop()
 
 
 if selected == "Add News":
