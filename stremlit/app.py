@@ -17,7 +17,7 @@ model = joblib.load(filename)
 
 with st.sidebar:
     selected = option_menu("Main Menu", ["Add News", "News"], 
-        icons=['house', 'gear'], menu_icon="cast", default_index=0)
+        icons=['cloud-upload', 'house'], menu_icon="cast", default_index=0)
     selected
 
   
