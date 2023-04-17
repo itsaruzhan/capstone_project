@@ -24,7 +24,7 @@ with st.sidebar:
 class News:
     def __init__(self, page_id):
         st.title(f"BBC NEWS N°{page_id}")
-        self.text = st.text_area("New")
+        self.text = st.text_area("Add News")
         predictions = model.predict([self.text])
         predictions = pd.Series(predictions)
         predictions = predictions.replace([1, 2,3,4,5], ["Sport", "Business", "Politics","Entertainment","Tech"])
@@ -54,7 +54,7 @@ def main():
                     st.session_state.num += 1
                     with st.spinner('Wait for it...'):
                         time.sleep(3)
-                        st.success("Done! New's category is " +  new_comment.category)
+                        st.success("Done! News' category is " +  new_comment.category)
                     placeholder.empty()
                     placeholder2.empty()
                 else:
