@@ -9,9 +9,9 @@ if 'num' not in st.session_state:
 if 'data' not in st.session_state:
     st.session_state.data = []
 st.write("""
-    # NUR.KZ NEWS Classification 
+    # Загружай новости NUR.KZ и узнай категорию!
     """)
-filename = "stremlit/nlp-model.joblib"
+filename = "streamlit/nlp-model-ru.joblib"
 
 model = joblib.load(filename)
 
