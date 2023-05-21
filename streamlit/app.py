@@ -11,7 +11,7 @@ if 'data' not in st.session_state:
 st.write("""
     # Загружай новости NUR.KZ и узнай категорию!
     """)
-filename = "./nlp-model-ru.joblib"
+filename = "streamlit/nlp-model-ru.joblib"
 
 model = joblib.load(filename)
 
