@@ -5,7 +5,8 @@ from streamlit_option_menu import option_menu
 import time
 from sklearn.base import BaseEstimator, TransformerMixin
 import string
-
+from pymorphy2 import MorphAnalyzer 
+import pymorphy2
 from nltk.corpus import stopwords
 import re
 
@@ -54,7 +55,10 @@ class CustomTextPrep(BaseEstimator, TransformerMixin):
         def delete_stopwords(text):
             stop_words = set(stopwords.words('russian'))
             return ' '.join([word for word in text.split() if word not in (stop_words)])
-        
+        def stemming(text):
+            morph = pymorphy2.MorphAnalyzer()
+            return ' '.join([morph.parse(word)[0].normal_form for word in text.split()])
+
         X_copy = X.copy()
         X_copy = X_copy.apply(lambda text: text_clean(str(text)))
         if delete_stopwords:
