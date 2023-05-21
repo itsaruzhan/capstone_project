@@ -5,8 +5,10 @@ from streamlit_option_menu import option_menu
 import time
 from sklearn.base import BaseEstimator, TransformerMixin
 import string
+from pymorphy2 import MorphAnalyzer 
 import pymorphy2
 from nltk.corpus import stopwords
+import re
 
 if 'num' not in st.session_state:
     st.session_state.num = 1
