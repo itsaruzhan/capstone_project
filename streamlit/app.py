@@ -3,6 +3,10 @@ import pandas as pd
 import joblib
 from streamlit_option_menu import option_menu
 import time
+from sklearn.base import BaseEstimator, TransformerMixin
+import string
+import pymorphy2
+from nltk.corpus import stopwords
 
 if 'num' not in st.session_state:
     st.session_state.num = 1
@@ -20,6 +24,50 @@ with st.sidebar:
         icons=['cloud-upload', 'house'], menu_icon="cast", default_index=0)
     selected
 
+
+class CustomTextPrep(BaseEstimator, TransformerMixin):
+    """My custom description
+    Args:
+        delete_stopwords (bool): True if I want to delete most popular russian words 
+    Returns:
+
+    """
+    def __init__(self, delete_stopwords=True):
+        self.delete_stopwords = delete_stopwords
+    
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X: pd.DataFrame, y=None) -> pd.DataFrame:
+        def text_clean(text):        
+            text = text.lower() 
+            text = re.sub('https?://\S+|www\.\S+', '', text) 
+            text = re.sub(r"\b\d+\b", "", text) 
+            text = re.sub('<.*?>+', '', text) 
+            text = re.sub('[%s]' % re.escape(string.punctuation), '', text) 
+            text = re.sub('\n', '', text)
+            text = re.sub('[’“”…]', '', text)
+
+            return text
+
+        def delete_stopwords(text):
+            stop_words = set(stopwords.words('russian'))
+            return ' '.join([word for word in text.split() if word not in (stop_words)])
+        def stemming(text):
+            morph = pymorphy2.MorphAnalyzer()
+            return ' '.join([morph.parse(word)[0].normal_form for word in text.split()])
+
+        X_copy = X.copy()
+        X_copy = X_copy.apply(lambda text: text_clean(str(text)))
+        if delete_stopwords:
+            X_copy= X_copy.apply(lambda text: delete_stopwords(str(text)))
+        
+        X_copy = X_copy.apply(lambda text: stemming(str(text)))
+        
+        return X_copy
+        
+
+    
   
 class News:
     def __init__(self, page_id):
@@ -91,7 +139,3 @@ if selected == "Добавить Новости":
 if selected == "Читать Новости":
     show_news()                
         
-
-        
-
-    
