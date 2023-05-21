@@ -6,7 +6,7 @@ import time
 from sklearn.base import BaseEstimator, TransformerMixin
 import string
 
-from nltk.corpus import stopwords
+
 import re
 
 if 'num' not in st.session_state:
@@ -50,18 +50,10 @@ class CustomTextPrep(BaseEstimator, TransformerMixin):
             text = re.sub('[’“”…]', '', text)
 
             return text
-
-        def delete_stopwords(text):
-            stop_words = set(stopwords.words('russian'))
-            return ' '.join([word for word in text.split() if word not in (stop_words)])
-        
+  
         X_copy = X.copy()
         X_copy = X_copy.apply(lambda text: text_clean(str(text)))
-        if delete_stopwords:
-            X_copy= X_copy.apply(lambda text: delete_stopwords(str(text)))
-        
-        X_copy = X_copy.apply(lambda text: stemming(str(text)))
-        
+         
         return X_copy
         
 
