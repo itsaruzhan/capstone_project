@@ -27,7 +27,7 @@ class News:
         self.text = st.text_area("Add News")
         predictions = model.predict([self.text])
         predictions = pd.Series(predictions)
-        predictions = predictions.replace([1, 2,3,4,5], ["Sport", "Business", "Politics","Entertainment","Tech"])
+        predictions = predictions.replace([1,2,3,4,5], ["Sport", "Business", "Politics","Entertainment","Tech"])
         self.category = predictions[0]
 
 def main():
@@ -53,46 +53,48 @@ def main():
             else:
                 st.stop()
 
+def show_news():
+    
+    if len(st.session_state.data)>0:
+            df = pd.DataFrame(st.session_state.data)  
 
+            tab1, tab2, tab3, tab4, tab5 = st.tabs(["Sport", "Business", "Politics","Entertainment","Tech"])
+
+            with tab1:
+                st.header("Sport News")
+                for index, new in enumerate(df[df['category']== "Sport"]["new"]):
+                    st.title(f"Sport NEWS N°{index+1}")
+                    st.write(new)
+                
+
+            with tab2:
+                st.header("Business News")
+                for index, new in enumerate(df[df['category']== "Business"]["new"]):
+                    st.title(f"Business NEWS N°{index+1}")
+                    st.write(new)
+            with tab3:
+                st.header("Politics News")
+                for index, new in enumerate(df[df['category']== "Politics"]["new"]):
+                    st.title(f"Politics NEWS N°{index+1}")
+                    st.write(new)
+
+            with tab4:
+                st.header("Entertainment News")
+                for index, new in enumerate(df[df['category']== "Entertainment"]["new"]):
+                    st.title(f"Entertainment NEWS N°{index+1}")
+                    st.write(new)
+
+            with tab5:
+                st.header("Tech News")
+                for index, new in enumerate(df[df['category']== "Tech"]["new"]):
+                    st.title(f"Tech NEWS N°{index+1}")
+                    st.write(new)        
 if selected == "Add News":
     main()
 
 
 if selected == "News":
-    if len(st.session_state.data)>0:
-        df = pd.DataFrame(st.session_state.data)  
-
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(["Sport", "Business", "Politics","Entertainment","Tech"])
-
-        with tab1:
-            st.header("Sport News")
-            for index, new in enumerate(df[df['category']== "Sport"]["new"]):
-                st.title(f"Sport NEWS N°{index+1}")
-                st.write(new)
-            
-
-        with tab2:
-            st.header("Business News")
-            for index, new in enumerate(df[df['category']== "Business"]["new"]):
-                st.title(f"Business NEWS N°{index+1}")
-                st.write(new)
-        with tab3:
-            st.header("Politics News")
-            for index, new in enumerate(df[df['category']== "Politics"]["new"]):
-                st.title(f"Politics NEWS N°{index+1}")
-                st.write(new)
-
-        with tab4:
-            st.header("Entertainment News")
-            for index, new in enumerate(df[df['category']== "Entertainment"]["new"]):
-                st.title(f"Entertainment NEWS N°{index+1}")
-                st.write(new)
-
-        with tab5:
-            st.header("Tech News")
-            for index, new in enumerate(df[df['category']== "Tech"]["new"]):
-                st.title(f"Tech NEWS N°{index+1}")
-                st.write(new)                        
+    show_news()                
         
 
         
