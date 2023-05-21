@@ -11,7 +11,7 @@ if 'data' not in st.session_state:
 st.write("""
     # Загружай новости NUR.KZ и узнай категорию!
     """)
-filename = "streamlit/nlp-model.joblib"
+filename = "streamlit/nlp-model-ru.joblib"
 
 model = joblib.load(filename)
 
@@ -25,7 +25,7 @@ class News:
     def __init__(self, page_id):
         st.title(f"NUR.KZ NEWS N°{page_id}")
         self.text = st.text_area("Добавить Новости")
-        predictions = model.predict([self.text])
+        predictions = model.predict(pd.Series([self.text]))
         predictions = pd.Series(predictions)
         predictions = predictions.replace([1,2,3,4,5], ["Политика", "Финансы", "Общество","Новости мира"])
         self.category = predictions[0]
