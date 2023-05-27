@@ -40,8 +40,8 @@ def main():
         with placeholder.form(key=str(num)):
 
             new_comment = News(page_id=num)        
-
-            if st.form_submit_button('Отправить'):                
+            submitted = st.form_submit_button("Отправить")
+            if submitted:                
                 st.session_state.data.append({
                         'id': num, 'new': new_comment.text, 'category': new_comment.category})
                 st.session_state.num += 1
