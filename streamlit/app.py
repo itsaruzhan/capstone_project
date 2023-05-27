@@ -37,7 +37,7 @@ class News:
         st.title(f"NUR.KZ NEWS N°{page_id}")
         self.text = st.text_area("Добавить")
         pred_text = text_clean(str(self.text))
-        predictions = model.predict([pred_text])
+        predictions = model.predict([self.text])
         predictions = pd.Series(predictions)
         predictions = predictions.replace([1,2,3,4], ["Политика", "Финансы", "Общество","Мир"])
         self.category = predictions[0]
