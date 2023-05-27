@@ -9,9 +9,15 @@ if 'num' not in st.session_state:
 if 'data' not in st.session_state:
     st.session_state.data = []
 st.write("""
-    # BBC NEWS Classification 
+<<<<<<< HEAD
+    # NEWS Classification Project
     """)
 filename = "streamlit/nlp-model.joblib"
+=======
+    # Загружай новости NUR.KZ и узнай категорию!
+    """)
+filename = "streamlit/nlp-model-ru.joblib"
+>>>>>>> parent of 60b536d (Revert "Update app.py")
 
 model = joblib.load(filename)
 
@@ -23,7 +29,7 @@ with st.sidebar:
   
 class News:
     def __init__(self, page_id):
-        st.title(f"BBC NEWS N°{page_id}")
+        st.title(f"NEWS N°{page_id}")
         self.text = st.text_area("Add News")
         predictions = model.predict([self.text])
         predictions = pd.Series(predictions)
