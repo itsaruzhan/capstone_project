@@ -25,6 +25,7 @@ class News:
     def __init__(self, page_id):
         st.title(f"NUR.KZ NEWS N°{page_id}")
         self.text = st.text_area("Добавить")
+        st.form_submit_button("Отправить")
         predictions = model.predict([self.text])
         predictions = pd.Series(predictions)
         predictions = predictions.replace([1,2,3,4,5], ["Политика", "Финансы", "Общество","Мир"])
@@ -40,8 +41,8 @@ def main():
         with placeholder.form(key=str(num)):
 
             new_comment = News(page_id=num)        
-            submitted = st.form_submit_button("Отправить")
-            if submitted:                
+            
+            if st.form_submit_button("Отправить"):                
                 st.session_state.data.append({
                         'id': num, 'new': new_comment.text, 'category': new_comment.category})
                 st.session_state.num += 1
