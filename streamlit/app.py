@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 from streamlit_option_menu import option_menu
 import time
+import re
 
 if 'num' not in st.session_state:
     st.session_state.num = 1
@@ -23,10 +24,18 @@ with st.sidebar:
   
 class News:
     def __init__(self, page_id):
+        def text_clean(text):        
+            text = text.lower() 
+            text = re.sub('https?://\S+|www\.\S+', '', text) 
+            text = re.sub(r"\b\d+\b", "", text) 
+            text = re.sub('<.*?>+', '', text) 
+            text = re.sub('[%s]' % re.escape(string.punctuation), '', text) 
+            text = re.sub('\n', '', text)
+            text = re.sub('[’“”…]', '', text)
+
         st.title(f"NUR.KZ NEWS N°{page_id}")
         self.text = st.text_area("Добавить")
-        self.text = self.text.lower()
-        predictions = model.predict([self.text])
+        predictions = model.predict([text_clean(self.text)])
         predictions = pd.Series(predictions)
         predictions = predictions.replace([1,2,3,4], ["Политика", "Финансы", "Общество","Мир"])
         self.category = predictions[0]
