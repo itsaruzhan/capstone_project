@@ -39,7 +39,7 @@ class News:
        # pred_text = text_clean(str(self.text))
         predictions = model.predict([self.text])
         predictions = pd.Series(predictions)
-        predictions = predictions.replace([1,2,3,4], ["Политика", "Финансы", "Общество","Мир"])
+        predictions = predictions.replace([1,2,3,4], ["Политика", "Финансы", "Мир", "Общество"])
         self.category = predictions[0]
 
 def main():
